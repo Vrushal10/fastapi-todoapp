@@ -1,0 +1,23 @@
+annotated-types==0.7.0
+anyio==4.6.0
+argon2-cffi @ file:///opt/conda/conda-bld/argon2-cffi_1645000214183/work
+argon2-cffi-bindings @ file:///C:/ci_311/argon2-cffi-bindings_1676424443321/work
+bcrypt==4.0.1
+cffi @ file:///C:/b/abs_90yq4lmu83/croot/cffi_1726856448345/work
+click @ file:///C:/b/abs_f9ihnt72pu/croot/click_1698129847492/work
+colorama @ file:///C:/ci_311/colorama_1676422310965/work
+cryptography @ file:///C:/b/abs_35g500qir4/croot/cryptography_1724940575116/work
+fastapi==0.115.0
+greenlet==3.1.1
+h11 @ file:///C:/b/abs_1czwoyexjf/croot/h11_1706652332846/work
+idna==3.10
+passlib==1.7.4
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pydantic==2.9.2
+pydantic_core==2.23.4
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+sniffio==1.3.1
+SQLAlchemy==2.0.35
+starlette==0.38.6
+typing_extensions==4.12.2
+uvicorn==0.31.1
