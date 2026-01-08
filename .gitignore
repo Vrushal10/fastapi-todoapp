@@ -1,4 +1,5 @@
 todosapp.db
 .idea/
 .vscode/
-_pycache_/
+__pycache__/
+*.py[cod]
