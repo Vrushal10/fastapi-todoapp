@@ -5,6 +5,7 @@ from typing import Annotated
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from .auth import get_current_user
+from passlib.context import CryptContext
 
 
 router = APIRouter(
@@ -12,6 +13,7 @@ router = APIRouter(
     tags=['users']
 )
 
+bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 def get_db():
     db = SessionLocal()
@@ -22,6 +24,11 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
+
+
+class UserVerification(BaseModel):
+    password: str
+    new_password: str = Field(min_length=6)
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
@@ -35,3 +42,18 @@ async def get_user(user: user_dependency, db: db_dependency):
     
     return user_model
 
+
+@router.put("/password", status_code=status.HTTP_204_NO_CONTENT)
+async def password_change(user: user_dependency, db: db_dependency, 
+                          user_verification: UserVerification):
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authentication Failed")
+    user_model = db.query(Users).filter(Users.id == user.get('id')).first()
+
+    if not bcrypt_context.verify(user_verification.password, user_model.hashed_password):
+        raise HTTPException(status_code=401, detail="Error in password change, current password do not match!")
+    
+    user_model.hashed_password = bcrypt_context.hash(user_verification.new_password)
+
+    db.add(user_model)
+    db.commit()
